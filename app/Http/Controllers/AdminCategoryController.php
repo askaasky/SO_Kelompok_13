@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class AdminCategoryController extends Controller
 {
@@ -55,9 +56,19 @@ class AdminCategoryController extends Controller
     }
 
     public function destroy(Category $category)
-    {
+{
+    try {
         $category->delete();
 
-        return back()->with('success', 'Kategori dihapus');
+        return back()->with('success', 'Kategori berhasil dihapus');
+
+    } catch (QueryException $e) {
+
+        return back()->with(
+            'error',
+            'Kategori tidak dapat dihapus karena masih digunakan oleh data barang.'
+        );
     }
 }
+}
+

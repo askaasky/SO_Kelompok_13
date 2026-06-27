@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Location;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class AdminLocationController extends Controller
 {
@@ -52,9 +53,18 @@ class AdminLocationController extends Controller
     }
 
     public function destroy(Location $location)
-    {
+{
+    try {
         $location->delete();
 
         return back()->with('success', 'Lokasi berhasil dihapus');
+
+    } catch (QueryException $e) {
+
+        return back()->with(
+            'error',
+            'Lokasi tidak dapat dihapus karena masih digunakan oleh data barang.'
+        );
     }
+}
 }

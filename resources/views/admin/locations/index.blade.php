@@ -10,6 +10,18 @@
     Kelola Lokasi
 </h1>
 
+@if(session('success'))
+<div style="background:#dcfce7;color:#166534;padding:12px 16px;border-radius:8px;margin-bottom:16px;">
+    {{ session('success') }}
+</div>
+@endif
+
+@if(session('error'))
+<div style="background:#fee2e2;color:#b91c1c;padding:12px 16px;border-radius:8px;margin-bottom:16px;">
+    {{ session('error') }}
+</div>
+@endif
+
 <div class="table-card">
 
     <div class="table-header">
