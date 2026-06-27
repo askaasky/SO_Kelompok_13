@@ -1,1 +1,0 @@
-# SO_Kelompok_13
