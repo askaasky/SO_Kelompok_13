@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+public/build/
+public/hot/
+
+# Environment files (JANGAN commit file env yang berisi secret)
+.env
+.env.backup
+.env.production
+.env.docker
+
+# Laravel cache & logs
+*.log
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+bootstrap/cache/*.php
+
+# OS & IDE files
+.DS_Store
+Thumbs.db
+.editorconfig
+.phpactor.json
+.phpunit.result.cache
+/.fleet
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+Homestead.json
+Homestead.yaml
+
+# Git
+.git/
