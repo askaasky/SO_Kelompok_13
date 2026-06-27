@@ -1,25 +1,43 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <title>ELDIEF</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ELDIEF</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="{{ asset('css/user/app.css') }}">
+
+@yield('styles')
+
 </head>
 
-<body class="bg-slate-900 text-gray-200 min-h-screen">
+<body>
 
-<nav class="bg-slate-950 p-4 text-white flex justify-between border-b border-slate-800">
-    <b>ELDIEF</b>
+<nav class="navbar">
 
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button class="hover:text-red-400 transition">
-            Logout
-        </button>
-    </form>
+    <div class="logo-title">
+    <img src="{{ asset('images/uho.jpg') }}" class="uho-logo">
+
+    <img src="{{ asset('images/dokja.jpg') }}" class="brand-logo">
+
+    <span>ELDIEF</span>
+    </div>
+
+    <a href="{{ route('dashboard') }}" class="logout-nav">
+        ← Dashboard
+    </a>
+
 </nav>
 
 <div class="p-6">
+
     @yield('content')
+
 </div>
 
 </body>

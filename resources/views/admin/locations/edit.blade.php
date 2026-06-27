@@ -1,30 +1,55 @@
 @extends('layouts.admin')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/admin/admin-form.css') }}">
+@endpush
+
 @section('content')
-<h1>Edit Lokasi</h1>
 
-<form action="{{ route('admin.locations.update', $location) }}" method="POST">
-    @csrf
-    @method('PUT')
+<h1 class="page-title">
+    Edit Lokasi
+</h1>
 
-    <label>Nama Lokasi</label>
-    <input type="text"
-           name="name"
-           value="{{ old('name', $location->name) }}"
-           required>
+<div class="form-card">
 
-    @error('location_name')
-        <small style="color:red">{{ $message }}</small>
-    @enderror
+    <form action="{{ route('admin.locations.update', $location) }}" method="POST">
 
-    <br><br>
+        @csrf
+        @method('PUT')
 
-    <button type="submit" class="btn-primary">
-        Update
-    </button>
+        <div class="form-group">
 
-    <a href="{{ route('admin.locations.index') }}">
-        Batal
-    </a>
-</form>
+            <label>Nama Lokasi</label>
+
+            <input
+                type="text"
+                name="name"
+                value="{{ old('name', $location->name) }}"
+                required
+            >
+
+            @error('name')
+                <small style="color:#ef4444; margin-top:8px;">
+                    {{ $message }}
+                </small>
+            @enderror
+
+        </div>
+
+        <div class="form-actions">
+
+            <button type="submit" class="btn-save">
+                Update
+            </button>
+
+            <a href="{{ route('admin.locations.index') }}" class="btn-back">
+                Batal
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
 @endsection

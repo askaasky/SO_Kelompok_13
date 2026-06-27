@@ -1,145 +1,146 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Login | ELDIEF</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont;
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-        body {
-            min-height: 100vh;
-            background: radial-gradient(circle at top, #0a2540, #020617);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #e5e7eb;
-        }
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        .card {
-            width: 100%;
-            max-width: 420px;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid #1e293b;
-            border-radius: 20px;
-            padding: 45px 40px;
-            box-shadow: 0 25px 60px rgba(0,0,0,.6);
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        .logo {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #38bdf8, #2563eb);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            font-weight: 800;
-            margin: 0 auto 25px;
-            color: white;
-            box-shadow: 0 0 40px rgba(56,189,248,.5);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 6px;
-            font-size: 24px;
-        }
-
-        .subtitle {
-            text-align: center;
-            font-size: 14px;
-            color: #94a3b8;
-            margin-bottom: 30px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        input {
-            background: #020617;
-            border: 1px solid #1e293b;
-            color: #e5e7eb;
-            padding: 14px 18px;
-            border-radius: 999px;
-            font-size: 14px;
-            outline: none;
-            transition: border .2s ease, box-shadow .2s ease;
-        }
-
-        input::placeholder {
-            color: #64748b;
-        }
-
-        input:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56,189,248,.15);
-        }
-
-        button {
-            margin-top: 10px;
-            padding: 14px;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #38bdf8, #2563eb);
-            border: none;
-            color: white;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: transform .2s ease, box-shadow .2s ease;
-            box-shadow: 0 10px 30px rgba(37,99,235,.4);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(37,99,235,.6);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 12px;
-            color: #64748b;
-        }
-
-        .footer a {
-            color: #38bdf8;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/user/login.css') }}">
 </head>
+
 <body>
 
-    <div class="card">
-        <div class="logo">E</div>
+<div class="wrapper">
 
-        <h1>Login</h1>
-        <div class="subtitle">Masuk ke sistem ELDIEF</div>
+    <div class="login-container">
 
-        <form method="POST" action="/login">
-            @csrf
-            <input name="nim" placeholder="NIM" required>
-            <input name="password" type="password" placeholder="Password" required>
-            <button>Login</button>
-        </form>
+        <div class="left-panel">
 
-        <div class="footer">
-            © {{ date('Y') }} ELDIEF
+            <div class="badge">
+                <img src="{{ asset('images/uho.jpg') }}" alt="UHO">
+                <span>Universitas Halu Oleo</span>
+            </div>
+
+            <div class="brand-header">
+
+            <div class="logo">
+                <img src="{{ asset('images/dokja.jpg') }}" alt="Logo UHO">
+            </div>
+
+            <h1>ELDIEF</h1>
+
+            </div>
+            <h2>Lost & Found Campus</h2>
+            <p class="description">
+                Jangan panik kalau barangmu hilang. Lapor di ELDIEF, siapa tahu udah ada yang nemuin
+            </p>
+
+            <div class="info-list">
+
+                <div class="info-item">
+
+                    <h3>Pelaporan Barang</h3>
+
+                    <p>
+                        Laporkan barang hilang maupun
+                        barang yang ditemukan.
+                    </p>
+
+                </div>
+
+                <div class="info-item">
+
+                    <h3>Pencarian Cepat</h3>
+
+                    <p>
+                        Temukan pemilik barang melalui
+                        sistem secara digital.
+                    </p>
+
+                </div>
+
+            </div>
+
         </div>
+
+        <div class="right-panel">
+
+            <div class="login-card">
+
+                <h2>
+                    Selamat Datang
+                </h2>
+
+                <p class="subtitle">
+                    Masuk ke akun ELDIEF untuk melanjutkan.
+                </p>
+
+                <form method="POST" action="/login">
+
+                    @csrf
+
+                    <div class="input-group">
+
+                        <label>NIM</label>
+
+                        <input
+                            type="text"
+                            name="nim"
+                            placeholder="Masukkan NIM"
+                            required
+                        >
+
+                    </div>
+                                        <div class="input-group">
+
+                        <label>Password</label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Masukkan Password"
+                            required
+                        >
+
+                    </div>
+
+                    <button type="submit">
+                        Login
+                    </button>
+
+                </form>
+
+                <div class="divider"></div>
+
+                <div class="footer">
+
+                    <p>
+                        © {{ date('Y') }}
+                        <strong>ELDIEF</strong>
+                    </p>
+
+                    <span>
+                        Lost & Found Universitas Halu Oleo
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
+</div>
+
 </body>
+
 </html>

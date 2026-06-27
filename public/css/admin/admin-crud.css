@@ -1,0 +1,216 @@
+/* 
+   CRUD HEADER
+ */
+
+.table-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.table-header h2{
+
+    font-size:26px;
+    color:#fff;
+
+}
+
+/* 
+   TABLE CARD
+ */
+
+.table-card{
+
+    background:#111827;
+
+    border:1px solid #1e293b;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    box-shadow:0 12px 28px rgba(0,0,0,.25);
+
+}
+
+/* 
+   TABLE
+ */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#020617;
+
+}
+
+th{
+
+    padding:18px;
+
+    text-align:left;
+
+    color:#cbd5e1;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+td{
+
+    padding:18px;
+
+    border-bottom:1px solid #243041;
+
+    color:#f8fafc;
+
+}
+
+tbody tr{
+
+    transition:.2s;
+
+}
+
+tbody tr:hover{
+
+    background:#172033;
+
+}
+
+/* 
+   ACTION
+ */
+
+.action-column{
+
+    white-space:nowrap;
+
+}
+/* BUTTON */
+.btn-add{
+
+    display:inline-block;
+
+    padding:12px 18px;
+
+    background:#0f1521;
+
+    color:#fff;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.btn-add:hover{
+
+    background:#1d4ed8;
+
+}
+
+.btn-edit{
+
+    display:inline-block;
+
+    padding:8px 14px;
+
+    margin-right:8px;
+
+    background:#3b82f6;
+
+    color:#fff;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    transition:.25s;
+
+}
+
+.btn-edit:hover{
+
+    background:#2563eb;
+
+}
+
+.btn-delete{
+
+    border:none;
+
+    padding:8px 14px;
+
+    background:#469b4c;
+
+    color:#fff;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    transition:.25s;
+
+}
+
+.btn-delete:hover{
+
+    background:#179d20;
+
+}
+
+/* EMPTY */
+.empty-text{
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    padding:25px;
+
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .table-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+    .table-card{
+
+        overflow-x:auto;
+
+    }
+
+    table{
+
+        min-width:650px;
+
+    }
+
+}

@@ -10,11 +10,6 @@
         <p>{{ $totalItems }}</p>
     </div>
 
-    <div class="stat-card success">
-        <span>Barang Disetujui</span>
-        <p>{{ $approvedItems }}</p>
-    </div>
-
     <div class="stat-card users">
         <span>Total User</span>
         <p>{{ $totalUsers }}</p>

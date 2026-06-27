@@ -1,118 +1,162 @@
 @extends('layouts.app')
 
+@section('styles')
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ asset('css/user/item-form.css') }}">
+
+@endsection
+
 @section('content')
 
-<style>
-    /* FIX DARK MODE SELECT */
-    select {
-        width: 100%;
-        padding: 10px;
-        background: #020617;
-        color: #e5e7eb;
-        border: 1px solid #1e293b;
-        border-radius: 8px;
-    }
+<div class="item-form-container">
 
-    select option {
-        background: #020617;
-        color: #e5e7eb;
-    }
+    {{-- Header --}}
+    <div class="form-header">
 
-    select:focus {
-        outline: none;
-        border-color: #2563eb;
-    }
-</style>
+        <span class="form-badge">
+            ✏️ Edit Laporan
+        </span>
 
-<div style="
-    max-width:600px;
-    margin:40px auto;
-    background:#020617;
-    padding:24px;
-    border-radius:16px;
-    border:1px solid #1e293b;
-    color:#e5e7eb;
-">
-    <h2 style="font-size:20px;margin-bottom:20px;">
-        Edit Postingan
-    </h2>
+    </div>
 
-    <form method="POST" action="{{ route('items.update', $item->id) }}">
-        @csrf
-        @method('PUT')
+    <div class="form-card">
 
-        {{-- TITLE --}}
-        <input
-            type="text"
-            name="title"
-            value="{{ $item->title }}"
-            required
-            style="
-                width:100%;
-                padding:10px;
-                background:#020617;
-                color:white;
-                border:none;
-                border-bottom:1px solid #1e293b;
-                margin-bottom:12px;
-            "
+        <form
+            action="{{ route('items.update',$item->id) }}"
+            method="POST"
         >
 
-        {{-- DESCRIPTION --}}
-        <textarea
-            name="description"
-            rows="4"
-            required
-            style="
-                width:100%;
-                background:#020617;
-                color:white;
-                border:none;
-                resize:vertical;
-                margin-bottom:12px;
-            "
-        >{{ $item->description }}</textarea>
+            @csrf
+            @method('PUT')
 
-        {{-- CATEGORY & LOCATION --}}
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-            <select name="category_id" required>
-                @foreach($categories as $cat)
-                    <option value="{{ $cat->id }}" {{ $item->category_id==$cat->id?'selected':'' }}>
-                        {{ $cat->name }}
+            {{-- Nama Barang --}}
+            <div class="form-group">
+
+                <label>Nama Barang</label>
+
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ old('title',$item->title) }}"
+                    required
+                >
+
+            </div>
+
+            {{-- Deskripsi --}}
+            <div class="form-group">
+
+                <label>Deskripsi Barang</label>
+
+                <textarea
+                    name="description"
+                    rows="6"
+                    required
+                >{{ old('description',$item->description) }}</textarea>
+
+            </div>
+
+            <div class="form-grid">
+
+                {{-- Kategori --}}
+                <div class="form-group">
+
+                    <label>Kategori</label>
+
+                    <select name="category_id" required>
+
+                        @foreach($categories as $cat)
+
+                            <option
+                                value="{{ $cat->id }}"
+                                {{ old('category_id',$item->category_id)==$cat->id ? 'selected' : '' }}
+                            >
+                                {{ $cat->name }}
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+                {{-- Lokasi --}}
+                <div class="form-group">
+
+                    <label>Lokasi Terakhir</label>
+
+                    <select name="location_id" required>
+
+                        @foreach($locations as $loc)
+
+                            <option
+                                value="{{ $loc->id }}"
+                                {{ old('location_id',$item->location_id)==$loc->id ? 'selected' : '' }}
+                            >
+                                {{ $loc->name }}
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+            </div>
+                        {{-- Status --}}
+            <div class="form-group">
+
+                <label>Status Barang</label>
+
+                <select name="status" required>
+
+                    <option
+                        value="lost"
+                        {{ old('status',$item->status)=='lost' ? 'selected' : '' }}
+                    >
+                        🔴 Barang Hilang
                     </option>
-                @endforeach
-            </select>
 
-            <select name="location_id" required>
-                @foreach($locations as $loc)
-                    <option value="{{ $loc->id }}" {{ $item->location_id==$loc->id?'selected':'' }}>
-                        {{ $loc->name }}
+                    <option
+                        value="found"
+                        {{ old('status',$item->status)=='found' ? 'selected' : '' }}
+                    >
+                        🟢 Barang Ditemukan
                     </option>
-                @endforeach
-            </select>
-        </div>
 
-        {{-- STATUS --}}
-        <select name="status" required style="margin-bottom:16px;">
-            <option value="lost" {{ $item->status=='lost'?'selected':'' }}>Hilang</option>
-            <option value="found" {{ $item->status=='found'?'selected':'' }}>Ditemukan</option>
-        </select>
+                </select>
 
-        {{-- SUBMIT --}}
-        <button
-            style="
-                width:100%;
-                padding:12px;
-                background:#16a34a;
-                color:white;
-                border:none;
-                border-radius:999px;
-                font-weight:bold;
-                cursor:pointer;
-            "
-        >
-            Update
-        </button>
-    </form>
+            </div>
+
+            {{-- Tombol --}}
+            <div class="form-action">
+
+                <a
+                    href="{{ route('dashboard') }}"
+                    class="btn-cancel"
+                >
+                    ← Batal
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn-submit"
+                >
+                    💾 Simpan Perubahan
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
 </div>
+
 @endsection

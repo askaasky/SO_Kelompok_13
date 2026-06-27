@@ -1,111 +1,180 @@
 @extends('layouts.app')
 
-@section('content')
-<div style="
-    max-width: 800px;
-    margin: 40px auto;
-    color: #e5e7eb;
-">
+@section('styles')
 
-    {{-- HEADER PROFILE --}}
-    <div style="
-        background: linear-gradient(135deg, #020617, #0f172a);
-        padding: 30px;
-        border-radius: 16px;
-        margin-bottom: 30px;
-        border: 1px solid #1e293b;
-    ">
-        <div style="display: flex; align-items: center; gap: 20px;">
-            
-            {{-- AVATAR --}}
-            <div style="
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                background: #1d4ed8;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 32px;
-                font-weight: bold;
-                color: white;
-            ">
-                {{ strtoupper(substr($user->display_name, 0, 1)) }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ asset('css/user/profile.css') }}">
+
+@endsection
+
+@section('content')
+
+<div class="profile-container">
+    {{-- Header Profil --}}
+    <div class="profile-header">
+
+        <div class="profile-left">
+
+            <div class="profile-avatar">
+                {{ strtoupper(substr($user->display_name,0,1)) }}
             </div>
 
-            {{-- INFO --}}
-            <div>
-                <h2 style="margin:0;">
-                    {{ $user->display_name }}
-                </h2>
-                <p style="margin:5px 0; color:#9ca3af;">
-                    Mahasiswa
-                </p>
-                <p style="font-size:13px; color:#6b7280;">
-                    Total laporan: {{ $items->count() }}
-                </p>
+            <div class="profile-info">
+
+                <h2>{{ $user->display_name }}</h2>
+
+                <span class="profile-role">
+                    Mahasiswa Universitas Halu Oleo
+                </span>
+
+                <div class="profile-meta">
+
+                    <div>
+                        <strong>{{ $items->count() }}</strong>
+                        <span>Total Postingan</span>
+                    </div>
+
+                    <div>
+                        <strong>{{ $items->where('status','lost')->count() }}</strong>
+                        <span>Barang Hilang</span>
+                    </div>
+
+                    <div>
+                        <strong>{{ $items->where('status','found')->count() }}</strong>
+                        <span>Barang Ditemukan</span>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
+
     </div>
 
-    {{-- LIST POSTINGAN --}}
-    <h3 style="margin-bottom: 15px;">Postingan</h3>
+    {{-- Judul --}}
+    <div class="section-title">
 
-    @forelse ($items as $item)
-        <div style="
-            background: #111827;
-            padding: 20px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            border: 1px solid #1f2937;
-        ">
-            <h4 style="margin-top:0;">
-                {{ $item->title }}
-            </h4>
+        <h3>Postingan Saya</h3>
 
-            <span style="
-                display: inline-block;
-                padding: 4px 12px;
-                border-radius: 20px;
-                font-size: 12px;
-                color: white;
-                background: {{ $item->status === 'lost' ? '#dc2626' : '#16a34a' }};
-            ">
-                {{ strtoupper($item->status) }}
-            </span>
+        <p>
+            Semua barang yang pernah kamu laporkan akan muncul di sini.
+        </p>
 
-            <p style="margin-top: 12px;">
-                {{ $item->description }}
+    </div>
+
+    {{-- List Postingan --}}
+    <div class="profile-posts">
+
+        @forelse($items as $item)
+
+        <div class="profile-card">
+
+            @if($item->image_path)
+
+                <img
+                    src="{{ asset('storage/'.$item->image_path) }}"
+                    class="profile-image"
+                    alt="{{ $item->title }}"
+                >
+
+            @endif
+
+            <div class="profile-body">
+
+                <div class="profile-card-top">
+
+                    <div>
+
+                        <h3>{{ $item->title }}</h3>
+
+                        <small>
+                            {{ $item->created_at->diffForHumans() }}
+                        </small>
+
+                    </div>
+
+                    <span class="status {{ $item->status }}">
+                        {{ strtoupper($item->status) }}
+                    </span>
+
+                </div>
+
+                <p class="profile-desc">
+                    {{ $item->description }}
+                </p>
+
+                <div class="profile-info-row">
+
+                    <span>📂 {{ $item->category->name ?? '-' }}</span>
+
+                    <span>📍 {{ $item->location->location_name ?? '-' }}</span>
+
+                </div>
+                                @if($item->user_id === auth()->id())
+
+                <div class="profile-actions">
+
+                    <a
+                        href="{{ route('items.edit',$item->id) }}"
+                        class="edit-btn"
+                    >
+                        Edit
+                    </a>
+
+                    <form
+                        action="{{ route('items.destroy',$item->id) }}"
+                        method="POST"
+                        onsubmit="return confirm('Yakin ingin menghapus postingan ini?')"
+                    >
+                        @csrf
+                        @method('DELETE')
+
+                        <button
+                            type="submit"
+                            class="delete-btn"
+                        >
+                            Hapus
+                        </button>
+
+                    </form>
+
+                </div>
+
+                @endif
+
+            </div>
+
+        </div>
+
+        @empty
+
+        <div class="empty-post">
+
+            <h3>Belum Ada Postingan</h3>
+
+            <p>
+                Kamu belum pernah membuat laporan barang hilang ataupun ditemukan.
             </p>
 
-            <small style="color:#9ca3af;">
-                {{ $item->category->name ?? '-' }}
-                •
-                {{ $item->location->location_name ?? '-' }}
-                •
-                {{ $item->created_at->diffForHumans() }}
-            </small>
+            <a
+                href="{{ route('items.create') }}"
+                class="create-btn"
+            >
+                + Buat Postingan Pertama
+            </a>
 
-            {{-- AKSI JIKA PEMILIK --}}
-            @if ($item->user_id === auth()->id())
-                <div style="margin-top:10px;">
-                    <a href="#" style="color:#60a5fa; margin-right:10px;">Edit</a>
-                    <a href="#" style="color:#f87171;">Hapus</a>
-                </div>
-            @endif
-
-            @if ($item->image_path)
-                <img 
-                    src="{{ asset('storage/' . $item->image_path) }}" 
-                    class="w-full rounded-lg mb-3"
-                     alt="Item Image"
-    >
-            @endif
         </div>
-    @empty
-        <p style="color:#9ca3af;">Belum ada postingan.</p>
-    @endforelse
+
+        @endforelse
+
+    </div>
 
 </div>
+
 @endsection

@@ -9,18 +9,12 @@ use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminLocationController;
 
 /*
-|--------------------------------------------------------------------------
 | PUBLIC
-|--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
 
 /*
-|--------------------------------------------------------------------------
 | AUTH
-|--------------------------------------------------------------------------
 */
 Route::get('/login', [AuthController::class, 'showLogin'])
     ->middleware('guest')
@@ -34,16 +28,13 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 /*
-|--------------------------------------------------------------------------
 | USER (MAHASISWA)
-|--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
 
     // DASHBOARD USER
     Route::get('/dashboard', [ItemController::class, 'dashboard'])
-    ->name('dashboard')
-    ->middleware('auth');
+        ->name('dashboard');
 
     // ITEM CRUD
     Route::get('/items/create', [ItemController::class, 'create'])
@@ -67,9 +58,7 @@ Route::middleware('auth')->group(function () {
 });
 
 /*
-|--------------------------------------------------------------------------
 | ADMIN
-|--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
@@ -77,19 +66,17 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::get('/dashboard', [AdminController::class, 'dashboard'])
             ->name('admin.dashboard');
-        
+
         Route::get('/users', [AdminController::class, 'users'])
             ->name('admin.users.index');
 
-
-        // ✅ BENAR
         Route::delete('/items/{item}', [AdminController::class, 'destroy'])
             ->name('admin.items.destroy');
 
         Route::get('/items', [AdminController::class, 'items'])
             ->name('admin.items');
 
-        // categories
+        // Categories
         Route::get('/categories', [AdminCategoryController::class, 'index'])
             ->name('admin.categories.index');
 
@@ -108,7 +95,7 @@ Route::middleware(['auth', 'role:admin'])
         Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])
             ->name('admin.categories.destroy');
 
-        // locations
+        // Locations
         Route::get('/locations', [AdminLocationController::class, 'index'])
             ->name('admin.locations.index');
 
@@ -126,5 +113,4 @@ Route::middleware(['auth', 'role:admin'])
 
         Route::delete('/locations/{location}', [AdminLocationController::class, 'destroy'])
             ->name('admin.locations.destroy');
-});
-
+    });
